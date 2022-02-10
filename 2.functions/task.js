@@ -3,12 +3,9 @@
 function getArrayParams(arr) {
   let min, max, sum, avg;
   sum = 0;
+  max = arr[0];
+  min = arr[0];
   for (let i = 0; i < arr.length; i++) {
-      if (i == 0) {
-        max = arr[i];
-        min = arr[i];
-      }
-
       if (arr[i] > max) {
         max = arr[i];
       }
@@ -18,24 +15,10 @@ function getArrayParams(arr) {
       }
       sum = arr[i] + sum;
   }
-  avg = sum / arr.length;
-  avg = avg.toFixed(2);
-  avg = Number(avg)
+  avg = Number((sum / arr.length).toFixed(2));
   return { min: min, max: max, avg: avg };
 }
 
-/*
-let [min, max, avg] = (function () {
-  let count = 0;
-  function showCounter() {
-    console.log(count);
-  }
-  function increaseCounter() {
-    count += 1;
-  }
-  return [min, max, avg];
-})()
-*/
 // Задание 2
 let arrOfArr = [[1, 2, 3, 4], [10, 20, -10, -20]];
 function worker(arr) {
@@ -47,25 +30,14 @@ function worker(arr) {
 }
 
 function makeWork(arrOfArr, func) {
-  let max;
-  let arr_int = [];
-  let sum_test;
-  let max_test;
+  let max = 0;
+  let arrInt = [];
   for (let i = 0; i < arrOfArr.length; i++) {
-      arrOfArr[i].forEach((item, ind, array) => arr_int.push(item));
-      max_test = func(arr_int);
-      if (sum_test == undefined) {
-        sum_test = max_test;
-      } else {
-        if (max_test > sum_test) {
-          max = max_test;
-        } else {
-          max = sum_test
-        }
+      if (max < func(arrOfArr[i])) {
+        max = func(arrOfArr[i]);
       }
-      arr_int = [];
+      arrInt = [];
   }
-
   return max;
 }
 
@@ -74,12 +46,9 @@ makeWork(arrOfArr, worker);
 // Задание 3
 function worker2(arr) {
   let min, max, sum;
+  max = arr[0];
+  min = arr[0];
   for (let i = 0; i < arr.length; i++) {
-      if (i == 0) {
-        max = arr[i];
-        min = arr[i];
-      }
-
       if (arr[i] > max) {
         max = arr[i];
       }
@@ -89,9 +58,7 @@ function worker2(arr) {
       }
       sum = arr[i] + sum;
   }
-  sum = max - min;
-  sum = Math.abs(sum);
-  return sum;
+  return sum = Math.abs(max - min);
 }
 
 makeWork(arrOfArr, worker2);
