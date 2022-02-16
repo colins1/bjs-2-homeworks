@@ -2,7 +2,6 @@ function Student(name, gender, age) {
     this.name = name;
     this.gender = gender;
     this.age = age;
-    this.grades = {};
 }
 
 Student.prototype.setSubject = function (subjectName) {
@@ -21,14 +20,12 @@ Student.prototype.addMarks = function (...marksAll) {
       this.marks = marksAll;
 }
 
-Student.prototype.getAverage = function () {
-  let course_count = 0;
+Student.prototype.getAverage = function getAverage () {
   let sum = 0;
-    for (let course in this.marks) {
-      sum += course;
-    }
-    sum = sum / this.marks.length;
-    return Number(sum.toFixed());
+  this.marks.forEach((item, idx, arr) => sum = sum + item);
+  sum = sum / this.marks.length;
+  sum.toFixed();
+  return Number(sum);
 }
 
 Student.prototype.exclude = function (reason) {
@@ -36,5 +33,3 @@ Student.prototype.exclude = function (reason) {
     delete this.marks;
     this.excluded = reason;
 }
-
-Number(
