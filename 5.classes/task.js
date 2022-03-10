@@ -6,23 +6,23 @@ class PrintEditionItem {
     this.state = 100;
     this.type = null;
   }
-  fix () {
+  fix() {
     this.state = this.state * 1.5;
+    return newstate(this.state);
   }
-  set setState(state) {
-    if (state < 0) {
+
+  set newstate(state) {
+    if (this.state < 0) {
       this.state = 0;
-    } else if (state > 100) {
+    }
+    if (this.state > 100) {
       this.state = 100;
     } else {
-      stateNumb = state;
+      this.state = this.state;
     }
-    this._setState = state;
-  }
-  get setState() {
-    return this._setState;
   }
 }
+
 
 class Magazine extends PrintEditionItem {
   constructor(name, releaseDate, pagesCount, state, type) {
