@@ -27,18 +27,16 @@ class AlarmClock {
   }
 
   getCurrentFormattedTime () {
-    let a = String(this.alarmCollection.time);
-    return a;
+    return new Date().getHours() + ":" + new Date().getMinutes();
   }
 
   start () {
-    const checkClock = (checkIdAlarm) => {
-      const now = new Date().getHours() + ":" + new Date().getMinutes();
-      if (String(checkIdAlarm.time) === String(now)) {
-        checkIdAlarm.callback();
+    const checkIdAlarm = (checkClock) => {
+      if (checkClock.time == getCurrentFormattedTime()) {
+        checkClock.callback();
       }
-      if (!this.alarmCollection[0].id) {
-        const allAlarm = () => console.log("Мы уже приехали?");
+      if (!this.timerId) {
+        const allAlarm = () => this.alarmCollection.every((numb, i) => checkClock(numb))
         this.timerId = setInterval(allAlarm, 1000);
       }
     };
@@ -46,6 +44,3 @@ class AlarmClock {
   }
 
 }
-
-
-//let now = new Date().toLocaleTimeString().slice(0,-3); // 11:02
