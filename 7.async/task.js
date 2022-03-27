@@ -66,7 +66,3 @@ class AlarmClock {
     }
   }
 }
-
-
-
-//let now = new Date().toLocaleTimeString().slice(0,-3); // 11:02
