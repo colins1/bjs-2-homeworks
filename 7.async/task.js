@@ -53,7 +53,7 @@ class AlarmClock {
   }
 
   printAlarms () {
-    this.alarmCollection.forEach(element => console.log(`Айди ${element.id}!`));
+    this.alarmCollection.forEach(alarms => console.log(`Будильник № ${alarms.id} заведен на ${alarms.time}`));
   }
 
   clearAlarms() {
@@ -61,3 +61,22 @@ class AlarmClock {
     this.alarmCollection = [];
   }
 }
+
+let phoneAlarm = new AlarmClock();
+
+phoneAlarm.addClock("21:49", () => console.log("Пора вставать"), 1);
+phoneAlarm.addClock("21:50", () => { console.log("Давай вставай уже!"); phoneAlarm.removeClock(2)} , 2);
+try {
+phoneAlarm.addClock("21:50", () => console.log("Иди умывайся"));
+}
+catch (e1) {
+  console.log(e1);
+}
+phoneAlarm.addClock("21:51", () => {
+  console.log("Вставай, ато проспишь");
+  phoneAlarm.clearAlarms();
+  phoneAlarm.printAlarms();
+}, 3);
+phoneAlarm.addClock("21:52", () => console.log("Вставай, ато проспишь"), 1);
+phoneAlarm.printAlarms();
+phoneAlarm.start();
