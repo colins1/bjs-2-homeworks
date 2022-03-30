@@ -8,7 +8,8 @@ class AlarmClock {
     if(!id) {
       throw new Error('error text');
     }
-    if (this.alarmCollection.includes(id)) {
+    const chekId = (element) => element.id == id;
+    if (this.alarmCollection.some(chekId)) {
       console.error("Звонок уже существует");
       return;
     }
@@ -34,11 +35,12 @@ class AlarmClock {
   }
 
   start () {
-     (checkClock) => {
-      allAlarm.forEach(element => console.log(element));
-        if (alarm.time == this.getCurrentFormattedTime()) {
-          alarm.callback();
+    let checkClock = () => {
+      this.alarmCollection.forEach(alarmTime => {
+        if (alarmTime.time == this.getCurrentFormattedTime()) {
+          alarmTime.callback();
         }
+      });
     }
     if (!this.timerId) {
       this.timerId = setInterval(checkClock, 1000);
