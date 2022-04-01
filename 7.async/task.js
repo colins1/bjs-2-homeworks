@@ -8,7 +8,7 @@ class AlarmClock {
     if(!id) {
       throw new Error('error text');
     }
-    const chekId = (element) => element.id == id;
+    const chekId = (alarm) => alarm.id == id;
     if (this.alarmCollection.some(chekId)) {
       console.error("Звонок уже существует");
       return;
@@ -18,8 +18,8 @@ class AlarmClock {
 
 
   removeClock (id) {
-    if (this.alarmCollection.some(checkDell => checkDell.id == id)) {
-      const index = this.alarmCollection.findIndex(book => book.id === id);
+    const index = this.alarmCollection.findIndex(alarm => alarm.id === id);
+    if (index != null) {
       this.alarmCollection.splice(index, 1);
       return true;
     } else {
@@ -57,7 +57,7 @@ class AlarmClock {
   }
 
   clearAlarms() {
-    stop();
+    this.stop();
     this.alarmCollection = [];
   }
 }
