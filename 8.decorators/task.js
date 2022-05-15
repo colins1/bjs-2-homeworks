@@ -2,17 +2,17 @@ function cachingDecoratorNew(func) {
   let cache = [];
 
   function wrapper(...args) {
-      const hash = args.toString(); // получаем правильный хэш
-      let idx = cache.findIndex((item)=> item.hash == hash); // ищем элемент, хэш которого равен нашему хэшу
-      if (idx !== -1 ) { // если элемент не найден
-          console.log("Из кэша: " + cache[idx].value); // индекс нам известен, по индексу в массиве лежит объект, как получить нужное значение?
+      const hash = args.toString();
+      let idx = cache.findIndex((item)=> item.hash == hash);
+      if (idx !== -1 ) {
+          console.log("Из кэша: " + cache[idx].value);
           return "Из кэша: " + cache[idx].value;
       }
 
-      let result = func(...args); // в кэше результата нет - придётся считать
-      cache.push({ hash: hash, value: result }) ; // добавляем элемент с правильной структурой
+      let result = func(...args);
+      cache.push({ hash: hash, value: result }) ;
       if (cache.length > 5) {
-        cache.shift(); // если слишком много элементов в кэше надо удалить самый старый (первый)
+        cache.shift();
       }
       console.log("Вычисляем: " + result);
       return "Вычисляем: " + result;
@@ -20,10 +20,34 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 
-function debounceDecoratorNew(func) {
-  // Ваш код
+
+function debounceDecoratorNew(func, ms) {
+  let timeout;
+  let flag = 'first';
+
+  function wrapper(...args) {
+    if (flag === false) {
+      flag = true
+      timeout = setTimeout (() => {
+        func(...args);
+        flag = false
+      }, ms)
+    } else if (flag != 'first') {
+      clearTimeout (timeout)
+      timeout = setTimeout (() => func(...args), ms)
+    } else {
+      func(...args)
+      flag = false
+    }
+  }
+  return wrapper;
 }
 
-function debounceDecorator2(func) {
-  // Ваш код
+function debounceDecorator2(debounceDecoratorNew) {
+  let count = 0;
+  function wrapper(...args) {
+    wrapper.count = count++;
+    return debounceDecoratorNew(...args);
+  }
+  return wrapper;
 }
