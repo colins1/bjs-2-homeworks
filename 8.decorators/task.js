@@ -44,10 +44,25 @@ function debounceDecoratorNew(func, ms) {
 }
 
 function debounceDecorator2(debounceDecoratorNew) {
-  let count = 0;
+  let timeout;
+  let flag = 'first';
+
   function wrapper(...args) {
-    wrapper.count = count++;
-    return debounceDecoratorNew(...args);
+    if (flag === false) {
+      flag = true
+      timeout = setTimeout (() => {
+        func(...args);
+        flag = false
+      }, ms)
+    } else if (flag != 'first') {
+      clearTimeout (timeout)
+      timeout = setTimeout (() => func(...args), ms)
+    } else {
+      wrapper.count = 0
+      func(...args)
+      flag = false
+    }
+    ++wrapper.count
   }
   return wrapper;
 }
