@@ -43,7 +43,7 @@ function debounceDecoratorNew(func, ms) {
   return wrapper;
 }
 
-function debounceDecorator2(debounceDecoratorNew) {
+function debounceDecorator2(func) {
   let timeout;
   let flag = 'first';
 
